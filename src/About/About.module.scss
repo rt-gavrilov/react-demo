@@ -1,0 +1,37 @@
+.root {
+  flex: 1 1 auto;
+  margin: 0;
+}
+
+.text_container {
+  margin: 32px
+}
+
+.icon_container {
+  background-color: rgba(0, 0, 255,.125);
+  position: relative;
+  min-width: 400px;
+  min-height: 400px;
+}
+
+$total_planets: 7;
+$orbit_radius: 80px;
+$icon_size: 80px;
+
+@for $i from 1 through $total_planets {
+
+  $angle: $i * 360deg / $total_planets;
+
+  .outer_circle_#{$i} {
+    position: absolute !important;
+    left: calc(50% - #{$icon_size / 2});
+    top: calc(50% - #{$icon_size / 2});
+
+    animation: orbit_frames_#{$i} 120s linear infinite;
+  };
+
+  @keyframes orbit_frames_#{$i} {
+    from { transform: rotate(0deg + $angle) translateX($orbit_radius * 2) rotate(0deg - $angle); }
+    to   { transform: rotate(360deg + $angle) translateX($orbit_radius * 2) rotate(-360deg - $angle); }
+  }
+}
