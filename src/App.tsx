@@ -3,6 +3,8 @@ import {Route} from 'react-router-dom';
 import About from './About/About';
 import {NavBar} from './NavBar/NavBar';
 import classes from './App.module.scss';
+import Stocks from './Stocks/Stocks';
+import {Redirect, Switch} from 'react-router';
 
 export class App extends Component<any> {
 
@@ -11,7 +13,12 @@ export class App extends Component<any> {
             <>
                 <NavBar className={classes.navbar}/>
                 <div className={classes.content}>
-                    <Route path="/about" component={About}/>
+                    <Switch>
+                        <Route path="/about" component={About}/>
+                        <Route path="/stocks" exact component={Stocks}/>
+                        <Route path="/stocks/:id/:interval" component={Stocks}/>
+                        <Redirect exact from="/" to="/about"/>
+                    </Switch>
                 </div>
             </>
         );

@@ -6,13 +6,14 @@ class About extends Component<any> {
     render() {
 
         const assets = [
-            {name: 'React', src: '/assets/react.logo.png', href: 'https://reactjs.org/'},
+            {name: 'React', src: '/assets/react.logo.png', href: 'https://reactjs.org'},
             {name: 'Semantic UI', src: '/assets/semantic-ui-react.logo.png', href: 'https://react.semantic-ui.com'},
             {name: 'Echarts', src: '/assets/echarts.logo.png', href: 'http://www.echartsjs.com'},
-            {name: 'MobX', src: '/assets/mobx.logo.png', href: 'http://www.echartsjs.com'},
+            {name: 'MobX', src: '/assets/mobx.logo.png', href: 'https://mobx.js.org'},
+            {name: 'RxJS', src: '/assets/rxjs.logo.png', href: 'https://rxjs-dev.firebaseapp.com'},
             {name: 'Typescript', src: '/assets/typescript.logo.png', href: 'http://www.typescriptlang.org'},
-            {name: 'SASS', src: '/assets/sass.logo.png', href: 'http://sass-lang.com/'},
-            {name: 'NPM', src: '/assets/npm.logo.png', href: 'https://npmjs.org/'},
+            {name: 'SASS', src: '/assets/sass.logo.png', href: 'http://sass-lang.com'},
+            {name: 'NPM', src: '/assets/npm.logo.png', href: 'https://npmjs.org'},
         ];
 
         const images = assets.map((asset, index) => {
