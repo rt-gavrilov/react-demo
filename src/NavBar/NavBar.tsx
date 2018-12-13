@@ -9,6 +9,7 @@ export class NavBar extends Component<any> {
             <Menu inverted className={this.props.className}>
                 <Menu.Menu style={{marginLeft: '50%'}}>
                     <Menu.Item as={Nav} name='Stocks' to="/stocks"/>
+                    <Menu.Item as={Nav} name='Market' to="/market"/>
                 </Menu.Menu>
                 <Menu.Menu position="right">
                     <Menu.Item as={Nav} name='About' to="/about"/>

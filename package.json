@@ -11,6 +11,7 @@
     "qs": "6.6.0",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
+    "react-google-charts": "^3.0.10",
     "react-router-dom": "^4.3.1",
     "rxjs": "^6.3.3",
     "semantic-ui-css": "^2.4.1",

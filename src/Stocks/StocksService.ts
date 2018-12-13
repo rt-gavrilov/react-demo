@@ -71,7 +71,7 @@ export class StocksService {
         // let config: any = {params: {from: '2018-12-01', till: '2018-12-07', interval: 60}};
 
         const config = {params: {
-            from: params.from.format('YYYY[-]MM[-]DD'),
+            from:params.from.format('YYYY[-]MM[-]DD'),
             till: params.till.format('YYYY[-]MM[-]DD'),
             interval: params.interval
         }};
@@ -86,8 +86,37 @@ export class StocksService {
         return response.data.candles.data.map(Candle.fromJSON);
     }
 
+    // BOARDID (string:12) 	TITLE (string:384)
+    // MRKT 	Итого: Рыночные сделки
+    // ADRS 	Итого: Адресные сделки
+    // MRAD 	Итого: Рыночные и Адресные сделки
+    // TOTL 	Итого: Рыночные, Адресные сделки и РЕПО
+
+    async stats(): Promise<SecurityStats[]> {
+        const till = moment();
+        const from = moment().subtract(1, 'days');
+
+        const config = {params: {
+            date: from.format('YYYY[-]MM[-]DD'),
+            // till: from.format('YYYY[-]MM[-]DD'),
+        }};
+
+        // /iss/engines/[engine]/markets/[market]/securities/[security]/candles
+        const response: any = await axios.get(
+            // https://iss.moex.com/iss/history/engines/stock/totals/boards/MRKT/securities?date=2018-12-12
+            // https://iss.moex.com/iss/history/engines/stock/totals/boards/MRKT/securities
+            `${this.BASE_URL}/history/engines/${'stock'}/totals/boards/${'MRKT'}/securities.json`,
+            config
+        );
+
+        return response.data.securities.data.map(SecurityStats.fromJSON);
+    }
+
     // Получить историю по всем бумагам на рынке за одну дату. Например:
-    // https://iss.moex.com/iss/history/engines/stock/markets/index/securities.xml?date=2010-11-22
+    // https://iss.moex.com/iss/history/engines/stock/markets/index/securities.json?date=2010-11-22
+
+    // https://iss.moex.com/iss/history/engines/stock/totals/boards/TQBR/securities.json
+    // https://iss.moex.com/iss/history/engines/stock/totals/securities.json
 }
 
 export enum Engine {
@@ -128,6 +157,16 @@ export class Candle {
         public readonly till: string
     ) {}
 
+    get priceDelta(): number {
+        if (this.open == 0) {
+            return 0;
+        }
+
+        const result = (this.close - this.open) / this.open;
+
+        return isNaN(result) ? 0 : result;
+    }
+
     static fromJSON(json: any): Candle {
         return new Candle(
             json[0],
@@ -138,6 +177,32 @@ export class Candle {
             json[5],
             json[6],
             json[7]
+        );
+    }
+}
+
+
+export class SecurityStats {
+    constructor(
+        public readonly code: string,
+        public dailyCap: number,
+        public monthlyCap: number,
+        public readonly dailyCandle: Candle
+    ) {}
+
+    get priceDelta(): number {
+        if (!this.dailyCandle) {
+            return 0;
+        }
+        return this.dailyCandle.priceDelta;
+    }
+
+    static fromJSON(json: any): SecurityStats {
+        return new SecurityStats(
+            json[0],
+            json[21],
+            json[22],
+            new Candle(json[4], json[7], json[6], json[5], json[15], json[14], null, null)
         );
     }
 }
