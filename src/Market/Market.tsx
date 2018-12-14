@@ -4,15 +4,15 @@ import {Chart} from 'react-google-charts';
 import * as lodash from 'lodash';
 
 
-export class StocksState {
+class MarketState {
     loading: boolean = true;
     stats: SecurityStats[] = [];
 }
 
 
-export class Market extends Component<any, StocksState> {
+export default class Market extends Component<any, MarketState> {
 
-    state = new StocksState();
+    state = new MarketState();
 
     constructor(props) {
         super(props);
