@@ -3,6 +3,8 @@ import * as lodash from 'lodash';
 import moment from 'moment';
 import {Interval} from './SearchParams/StockSearchParams';
 
+// alphavantage api key
+// VMII211XYVG2QUN9
 
 export class StocksService {
 
@@ -30,7 +32,12 @@ export class StocksService {
         return lodash.uniqBy(securities, 'code');
     }
 
-    async candles(security: string, mode: Interval = 'daily'): Promise<any[]> {
+    async candles(
+        security: string,
+        mode: Interval = 'daily',
+        market: Market = Market.Shares,
+        engine: Engine = Engine.Stock
+    ): Promise<Candle[]> {
 
         let params = null;
 
@@ -76,9 +83,11 @@ export class StocksService {
             interval: params.interval
         }};
 
+        // board: RFUD
+
         // /iss/engines/[engine]/markets/[market]/securities/[security]/candles
         const response: any = await axios.get(
-            `${this.BASE_URL}/engines/${'stock'}/markets/${'shares'}/securities/${security}/candles.json`,
+            `${this.BASE_URL}/engines/${engine}/markets/${market}/securities/${security}/candles.json`,
             // `${this.BASE_URL}/engines/${'stock'}/markets/${'shares'}/boards/${'TQBR'}/securities/${security.code}/candles.json`,
             config
         );
@@ -128,7 +137,9 @@ export enum Engine {
 export enum Market {
     Shares = 'shares',
     Index = 'index',
-    Bonds = 'bonds'
+    Bonds = 'bonds',
+    Selt = 'selt',
+    Forts = 'forts',
 }
 
 export class Security {

@@ -15,13 +15,11 @@ class StocksSearchParamsState {
     query: string = '';
     selected: Security = null;
     results: Security[] = [];
-    // interval: Interval = 'daily';
 }
 
 interface StockSearchParamsProps extends RouteComponentProps {
     security?: string,
     interval?: Interval
-    // onChange: (security: Security, interval: Interval) => void;
 }
 
 class StockSearchParams extends Component<StockSearchParamsProps, StocksSearchParamsState> {

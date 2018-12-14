@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Popup, Grid, GridRow, GridColumn, Container, Image} from 'semantic-ui-react';
+import {Grid, GridColumn, Image} from 'semantic-ui-react';
 import classes from './About.module.scss';
+
 
 class About extends Component<any> {
     render() {

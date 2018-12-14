@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, Menu} from 'semantic-ui-react';
+import {Icon, Image, Menu} from 'semantic-ui-react';
 import classes from './NavBar.module.scss';
 import {NavLink} from 'react-router-dom';
 
@@ -7,6 +7,11 @@ export class NavBar extends Component<any> {
     render() {
         return (
             <Menu inverted className={this.props.className}>
+                <Menu.Menu>
+                    <Menu.Item as={Nav} to="/">
+                        <Icon name="home" size="big"/>
+                    </Menu.Item>
+                </Menu.Menu>
                 <Menu.Menu style={{marginLeft: '50%'}}>
                     <Menu.Item as={Nav} name='Stocks' to="/stocks"/>
                     <Menu.Item as={Nav} name='Market' to="/market"/>
